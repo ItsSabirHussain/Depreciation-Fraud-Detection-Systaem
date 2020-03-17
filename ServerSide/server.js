@@ -10,8 +10,9 @@ var Grid = require("gridfs-stream");
 Grid.mongo = mongoose.mongo;
 var gfs = Grid(conn.db);
 var xlsx = require("xlsx");
-const file = require("./routes/file");
 const cors = require("cors");
+// Load User model
+const File = require("./models/file.js");
 
 app.use(
   bodyParser.urlencoded({
@@ -117,9 +118,6 @@ app.post("/getallfiles", function(req, res) {
 app.listen("5000", function() {
   console.log("Running on 5000...");
 });
-
-// Load User model
-const File = require("/Users/hussain/Desktop/Final Year Project SE-2020/Implementation/ServerSide/models/file.js");
 
 app.post("/addfile", (req, res) => {
   console.log(req.body);

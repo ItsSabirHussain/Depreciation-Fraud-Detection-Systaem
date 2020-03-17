@@ -29,8 +29,8 @@ class Upload extends Component {
       CompanyName: "",
       Date: Date,
       OptionalDetails: "",
-      DepreciationRates: {},
-      NegligibleRates: {},
+      DepreciationRates: "",
+      NegligibleRates: "",
       File: { name: null },
       Files: [],
       collapse: true,
@@ -71,7 +71,7 @@ class Upload extends Component {
         OptionalDetails: this.state.OptionalDetails,
         NegligibleRates: this.state.NegligibleRates,
         DepreciationRates: this.state.DepreciationRates,
-        FileName: res.data.file.Filename,
+        FileName: res.data.file.filename,
         FileID: res.data.file.id
       };
       console.log(tmpFileData);
@@ -141,7 +141,7 @@ class Upload extends Component {
                         onChange={e => {
                           this.setState({
                             ...this.state,
-                            date: e.target.value
+                            Date: e.target.value
                           });
                         }}
                       />
@@ -182,7 +182,7 @@ class Upload extends Component {
                         onChange={e => {
                           this.setState({
                             ...this.state,
-                            depreciationRates: e.target.value
+                            DepreciationRates: e.target.value
                           });
                         }}
                       />
@@ -206,7 +206,7 @@ class Upload extends Component {
                         onChange={e => {
                           this.setState({
                             ...this.state,
-                            negligibleRates: e.target.value
+                            NegligibleRates: e.target.value
                           });
                         }}
                       />
@@ -229,9 +229,7 @@ class Upload extends Component {
                               name="resume"
                               onChange={this.onChange}
                             />
-                            <span className="file-name">
-                              {this.state.file.name}
-                            </span>
+                            <span className="file-name"></span>
                           </label>
                         </div>
                         <div className="container is-fluid"></div>

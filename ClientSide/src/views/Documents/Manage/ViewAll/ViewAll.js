@@ -25,8 +25,10 @@ class ViewAll extends Component {
     };
   }
   renderFiles() {
+    console.log("Here");
     const url = "http://localhost:5000/getallfiles";
     axios.post(url).then(res => {
+      console.log(res.data);
       this.setState({ files: res.data });
     });
     return this.state.files.map((file, index) => {
