@@ -1,0 +1,6 @@
+{
+  "name": "ViewSpecificAsset",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ViewSpecificAsset.js"
+}
