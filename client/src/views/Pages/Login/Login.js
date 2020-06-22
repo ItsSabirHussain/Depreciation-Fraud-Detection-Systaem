@@ -25,6 +25,11 @@ class Login extends Component {
       password: "",
     };
   }
+  componentDidMount() {
+    if (localStorage.getItem("userID")) {
+      this.props.history.push("/dashboard");
+    }
+  }
   onSubmit() {
     axios
       .post("/userlogin", this.state)

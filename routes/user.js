@@ -26,9 +26,10 @@ router.post("/userreg", (req, res) => {
 
 /* Login user route */
 router.post("/userlogin", (req, res) => {
-  const Email = req.body.Email;
-  const Password = req.body.Password;
-  User.findOne({ ID: req.body.ID }).then((user) => {
+  console.log(req.body);
+  const Email = req.body.email;
+  const Password = req.body.password;
+  User.findOne({ Email: Email, Password: Password }).then((user) => {
     if (!user) {
       return res.status(404).json("ID not found");
     }

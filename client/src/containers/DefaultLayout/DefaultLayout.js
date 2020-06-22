@@ -88,13 +88,6 @@ class DefaultLayout extends Component {
             <Container fluid>
               <Suspense fallback={this.loading()}>
                 <Switch>
-                  ={" "}
-                  <Route
-                    path="/dashboard"
-                    render={(props) => (
-                      <Dashboard data={this.state.userInfo} {...props} />
-                    )}
-                  />
                   {routes.map((route, idx) => {
                     return route.component ? (
                       <Route
@@ -103,7 +96,10 @@ class DefaultLayout extends Component {
                         exact={route.exact}
                         name={route.name}
                         render={(props) => (
-                          <route.component {...props} data={this.userInfo} />
+                          <route.component
+                            {...props}
+                            data={this.state.userInfo}
+                          />
                         )}
                       />
                     ) : null;
