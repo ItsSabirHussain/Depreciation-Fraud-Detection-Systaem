@@ -1,13 +1,9 @@
 export default {
   items: [
     {
-      name: "Dashboard",
+      name: "Profile",
       url: "/dashboard",
       icon: "icon-speedometer",
-      badge: {
-        variant: "info",
-        text: "NEW",
-      },
     },
     {
       title: true,

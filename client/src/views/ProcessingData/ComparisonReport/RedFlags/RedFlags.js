@@ -14,7 +14,7 @@ import {
   FormGroup,
   FormText,
   Input,
-  Label
+  Label,
 } from "reactstrap";
 class RedFlags extends Component {
   constructor(props) {
@@ -37,9 +37,12 @@ class RedFlags extends Component {
         "Depreciation_Difference",
         "Documented_Rate",
         "Computed_Rate",
-        "Rate_Difference"
-      ]
+        "Rate_Difference",
+      ],
     };
+  }
+  convertDate(date) {
+    return date.toString().substring(0, 10);
   }
   onClick() {
     console.log("Here");
@@ -48,9 +51,10 @@ class RedFlags extends Component {
       .post(url, {
         CompanyName: this.state.CompanyName,
         SDate: this.state.SDate,
-        EDate: this.state.EDate
+        EDate: this.state.EDate,
+        UserID: localStorage.getItem("userID"),
       })
-      .then(res => {
+      .then((res) => {
         let tmpArr = [];
         res.data.AssetsName.map((data, index) => {
           if (
@@ -62,7 +66,7 @@ class RedFlags extends Component {
           ) {
             tmpArr.push({
               AssetName: data,
-              Date: res.data.Dates[index],
+              Date: this.convertDate(res.data.Dates[index]),
               Documented_Value: res.data.Documented_Value[index].toFixed(2),
               Computed_Value: res.data.Computed_Value[index].toFixed(2),
               Value_Difference:
@@ -91,11 +95,14 @@ class RedFlags extends Component {
                   res.data.Documented_Value[index] -
                 (res.data.Computed_Depreciation[index] * 100) /
                   res.data.Computed_Value[index]
-              ).toFixed(2)
+              ).toFixed(2),
             });
           }
         });
         console.log(tmpArr);
+        if (tmpArr.length == 0) {
+          alert("There is no red flag detected.");
+        }
         this.setState({ TableBady: tmpArr });
       });
   }
@@ -140,10 +147,10 @@ class RedFlags extends Component {
                         id="text-input"
                         name="text-input"
                         placeholder="Name of Document"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            CompanyName: e.target.value
+                            CompanyName: e.target.value,
                           });
                         }}
                       />
@@ -164,10 +171,10 @@ class RedFlags extends Component {
                         id="date-input"
                         name="date-input"
                         placeholder="date"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            SDate: e.target.value
+                            SDate: e.target.value,
                           });
                         }}
                       />
@@ -185,10 +192,10 @@ class RedFlags extends Component {
                         id="date-input"
                         name="date-input"
                         placeholder="date"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            EDate: e.target.value
+                            EDate: e.target.value,
                           });
                         }}
                       />
@@ -222,10 +229,7 @@ class RedFlags extends Component {
               </CardHeader>
               <CardBody>{this.renderData()}</CardBody>
               <CardFooter>
-                <Button type="submit" size="xl" color="primary">
-                  <i className="fa fa-dot-circle-o"></i> Save
-                </Button>{" "}
-                <Button type="submit" size="xl" color="danger">
+                <Button onClick={() => window.print()} size="xl" color="danger">
                   <i className="fa fa-dot-circle-o"></i> Print
                 </Button>{" "}
               </CardFooter>

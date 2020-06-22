@@ -31,6 +31,17 @@ class Login extends Component {
     }
   }
   onSubmit() {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (this.state.email == "") {
+      alert("Email field can't be empty.");
+    } else {
+      if (!re.test(this.state.email)) {
+        alert("Please enter a valid email.");
+      }
+    }
+    if (this.state.password == "") {
+      alert("Password field can't be empty.");
+    }
     axios
       .post("/userlogin", this.state)
       .then((res) => {
@@ -39,7 +50,7 @@ class Login extends Component {
         this.props.history.push("/dashboard");
       })
       .catch((error) => {
-        alert(error);
+        alert("Please enter a valid email or password");
       });
   }
 
@@ -62,7 +73,7 @@ class Login extends Component {
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
-                          type="text"
+                          type="email"
                           placeholder="Email"
                           autoComplete="email"
                           onChange={(e) => {

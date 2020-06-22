@@ -89,6 +89,12 @@ class Upload extends Component {
   }
 
   fileUpload(file) {
+    if (this.state.CompanyName == "") {
+      alert("Company Name field can't be empty.");
+    }
+    if (this.state.Date == "") {
+      alert("Date field can't be empty.");
+    }
     console.log(this.state.JData[0]);
     const url = "/upload";
     const formData = new FormData();
@@ -279,9 +285,6 @@ class Upload extends Component {
                   onClick={this.onSubmit}
                 >
                   <i className="fa fa-dot-circle-o"></i> Submit
-                </Button>
-                <Button type="reset" size="xl" color="danger">
-                  <i className="fa fa-ban"></i> Reset
                 </Button>
               </CardFooter>
             </Card>

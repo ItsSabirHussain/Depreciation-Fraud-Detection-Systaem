@@ -8,17 +8,13 @@ import {
   CardHeader,
   Col,
   Row,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Table,
   Button,
   CardFooter,
   Form,
   FormGroup,
   FormText,
   Input,
-  Label
+  Label,
 } from "reactstrap";
 class Rates extends Component {
   constructor(props) {
@@ -38,9 +34,12 @@ class Rates extends Component {
         "Value_Difference",
         "Documented_Rate",
         "Computed_Rate",
-        "Rate_Difference"
-      ]
+        "Rate_Difference",
+      ],
     };
+  }
+  convertDate(date) {
+    return date.toString().substring(0, 10);
   }
   onClick() {
     const url = "/extdepcom";
@@ -48,14 +47,15 @@ class Rates extends Component {
       .post(url, {
         CompanyName: this.state.CompanyName,
         SDate: this.state.SDate,
-        EDate: this.state.EDate
+        EDate: this.state.EDate,
+        UserID: localStorage.getItem("userID"),
       })
-      .then(res => {
+      .then((res) => {
         let tmpArr = [];
         res.data.AssetsName.map((data, index) => {
           tmpArr[index] = {
             AssetName: data,
-            Date: res.data.Dates[index],
+            Date: this.convertDate(res.data.Dates[index]),
             Documented_Value: res.data.Documented_Value[index].toFixed(2),
             Computed_Value: res.data.Computed_Value[index].toFixed(2),
             Value_Difference:
@@ -75,7 +75,7 @@ class Rates extends Component {
                 res.data.Documented_Value[index] -
               (res.data.Computed_Depreciation[index] * 100) /
                 res.data.Computed_Value[index]
-            ).toFixed(2)
+            ).toFixed(2),
           };
         });
 
@@ -123,10 +123,10 @@ class Rates extends Component {
                         id="text-input"
                         name="text-input"
                         placeholder="Name of Document"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            CompanyName: e.target.value
+                            CompanyName: e.target.value,
                           });
                         }}
                       />
@@ -147,10 +147,10 @@ class Rates extends Component {
                         id="date-input"
                         name="date-input"
                         placeholder="date"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            SDate: e.target.value
+                            SDate: e.target.value,
                           });
                         }}
                       />
@@ -168,10 +168,10 @@ class Rates extends Component {
                         id="date-input"
                         name="date-input"
                         placeholder="date"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            EDate: e.target.value
+                            EDate: e.target.value,
                           });
                         }}
                       />
@@ -188,9 +188,6 @@ class Rates extends Component {
                 >
                   <i className="fa fa-dot-circle-o"></i> Extract
                 </Button>{" "}
-                <Button type="reset" size="xl" color="danger">
-                  <i className="fa fa-ban"></i> Reset
-                </Button>
               </CardFooter>
             </Card>
           </Col>
@@ -205,9 +202,6 @@ class Rates extends Component {
               </CardHeader>
               <CardBody>{this.renderData()}</CardBody>
               <CardFooter>
-                <Button type="submit" size="xl" color="primary">
-                  <i className="fa fa-dot-circle-o"></i> Save
-                </Button>{" "}
                 <Button type="submit" size="xl" color="danger">
                   <i className="fa fa-dot-circle-o"></i> Print
                 </Button>{" "}

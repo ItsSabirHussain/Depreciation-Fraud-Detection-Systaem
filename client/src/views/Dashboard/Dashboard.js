@@ -24,24 +24,42 @@ class Dashboard extends Component {
     this.state = {
       dropdownOpen: false,
       radioSelected: 2,
-      name: this.props.data.Name,
-      email: this.props.data.Email,
-      password: this.props.data.Password,
-      designation: this.props.data.Designation,
     };
   }
   updateUser() {
-    console.log(this.state);
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    const data = {
+      id: localStorage.getItem("userID"),
+      Name: this.state.name,
+      Email: this.state.email,
+      Designation: this.state.designation,
+      Password: this.state.password,
+    };
+
+    if (!data.Designation) {
+      data.Designation = this.props.data.Designation;
+    }
+
+    if (!data.Name) {
+      data.Name = this.props.data.Name;
+    }
+
+    if (!data.Password) {
+      data.Password = this.props.data.Password;
+    }
+
+    if (!data.Email) {
+      data.Email = this.props.data.Email;
+    } else {
+      if (!re.test(data.Email)) {
+        alert("Please enter a valid email.");
+      }
+    }
     axios
-      .post("/userupdate", {
-        id: localStorage.getItem("userID"),
-        Name: this.state.name,
-        Email: this.state.email,
-        Password: this.state.password,
-        Designation: this.state.designation,
-      })
+      .post("/userupdate", data)
       .then((res) => {
-        this.props.history.push("/dashboard");
+        alert("Information has beed updated successfulluy.");
       })
       .catch((error) => {
         alert(error);
@@ -98,7 +116,7 @@ class Dashboard extends Component {
                         <InputGroupText>{"Email"}</InputGroupText>
                       </InputGroupAddon>
                       <Input
-                        type="text"
+                        type="email"
                         placeholder={this.props.data.Email}
                         autoComplete="email"
                         onChange={(e) => {

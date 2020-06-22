@@ -10,7 +10,7 @@ import {
   PaginationItem,
   PaginationLink,
   Row,
-  Table
+  Table,
 } from "reactstrap";
 import axios from "axios";
 
@@ -21,12 +21,15 @@ class ViewAll extends Component {
     this.state = {
       companyName: "",
       data: Date,
-      files: []
+      files: [],
     };
+  }
+  convertDate(date) {
+    return date.toString().substring(0, 10);
   }
   renderFiles() {
     const url = "/getallfiles";
-    axios.post(url).then(res => {
+    axios.post(url, { UserID: localStorage.getItem("userID") }).then((res) => {
       this.setState({ files: res.data });
     });
     return this.state.files.map((file, index) => {
@@ -34,11 +37,11 @@ class ViewAll extends Component {
         <tr key={file.id}>
           <td>{index + 1}</td>
           <td>{file.CompanyName}</td>
-          <td>{file.Date}</td>
+          <td>{this.convertDate(file.Date)}</td>
           <td>
-            <a href={"/file/" + file.FileName}>
+            <Link to={"/file/" + file.FileName} target="_blank" download>
               <Badge color="success">Download</Badge>
-            </a>
+            </Link>
           </td>
         </tr>
       );
@@ -67,30 +70,6 @@ class ViewAll extends Component {
                   </thead>
                   <tbody>{this.renderFiles()}</tbody>
                 </Table>
-                <Pagination>
-                  <PaginationItem disabled>
-                    <PaginationLink previous tag="button">
-                      Prev
-                    </PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem active>
-                    <PaginationLink tag="button">1</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink tag="button">2</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink tag="button">3</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink tag="button">4</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink next tag="button">
-                      Next
-                    </PaginationLink>
-                  </PaginationItem>
-                </Pagination>
               </CardBody>
             </Card>
           </Col>

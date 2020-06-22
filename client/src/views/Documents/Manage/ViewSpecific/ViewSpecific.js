@@ -10,7 +10,7 @@ import {
   PaginationItem,
   PaginationLink,
   Row,
-  Table
+  Table,
 } from "reactstrap";
 import {
   Button,
@@ -19,7 +19,7 @@ import {
   FormGroup,
   FormText,
   Input,
-  Label
+  Label,
 } from "reactstrap";
 import axios from "axios";
 class ViewSpecific extends Component {
@@ -30,7 +30,7 @@ class ViewSpecific extends Component {
       CompanyName: "",
       date: Date,
       TableBady: [],
-      TableHeaders: ["AssetName", "Value", "Depreciation", "NetValue"]
+      TableHeaders: ["AssetName", "Value", "Depreciation", "NetValue"],
     };
   }
   onClick() {
@@ -39,16 +39,22 @@ class ViewSpecific extends Component {
 
     const url = "/getfiledata";
     axios
-      .post(url, { CompanyName: this.state.CompanyName, date: this.state.date })
-      .then(res => {
+      .post(url, {
+        UserID: localStorage.getItem("userID"),
+        CompanyName: this.state.CompanyName,
+        date: this.state.date,
+      })
+      .then((res) => {
         let tmpArr = [];
         res.data.AssetName.map((data, index) => {
-          tmpArr[index] = {
-            AssetName: data,
-            Value: res.data.Value[index],
-            Depreciation: res.data.Depreciation[index],
-            NetValue: res.data.NetValue[index]
-          };
+          if (!data == "") {
+            tmpArr[index] = {
+              AssetName: data,
+              Value: res.data.Value[index],
+              Depreciation: res.data.Depreciation[index],
+              NetValue: res.data.NetValue[index],
+            };
+          }
         });
 
         this.setState({ TableBady: tmpArr });
@@ -93,10 +99,10 @@ class ViewSpecific extends Component {
                         id="text-input"
                         name="text-input"
                         placeholder="Name of Document"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            CompanyName: e.target.value
+                            CompanyName: e.target.value,
                           });
                         }}
                       />
@@ -117,10 +123,10 @@ class ViewSpecific extends Component {
                         id="date-input"
                         name="date-input"
                         placeholder="date"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            date: e.target.value
+                            date: e.target.value,
                           });
                         }}
                       />
@@ -140,9 +146,6 @@ class ViewSpecific extends Component {
                   onClick={this.onClick}
                 >
                   <i className="fa fa-dot-circle-o"></i> Submit
-                </Button>
-                <Button type="reset" size="xl" color="danger">
-                  <i className="fa fa-ban"></i> Reset
                 </Button>
               </CardFooter>
             </Card>

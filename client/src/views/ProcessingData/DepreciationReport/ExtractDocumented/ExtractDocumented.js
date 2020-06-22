@@ -14,7 +14,7 @@ import {
   FormGroup,
   FormText,
   Input,
-  Label
+  Label,
 } from "reactstrap";
 class ExtractDocumented extends Component {
   constructor(props) {
@@ -25,8 +25,11 @@ class ExtractDocumented extends Component {
       SDate: Date,
       EDate: Date,
       TableBady: [],
-      TableHeaders: ["AssetName", "Date", "Value", "Depreciation"]
+      TableHeaders: ["AssetName", "Date", "Value", "Depreciation"],
     };
+  }
+  convertDate(date) {
+    return date.toString().substring(0, 10);
   }
   onClick() {
     console.log(this.state.CompanyName);
@@ -36,18 +39,20 @@ class ExtractDocumented extends Component {
     const url = "/extdocdep";
     axios
       .post(url, {
+        UserID: localStorage.getItem("userID"),
         CompanyName: this.state.CompanyName,
         SDate: this.state.SDate,
-        EDate: this.state.EDate
+        EDate: this.state.EDate,
       })
-      .then(res => {
+      .then((res) => {
         let tmpArr = [];
+        console.log(res);
         res.data.AssetsName.map((data, index) => {
           tmpArr[index] = {
             AssetName: data,
-            Date: res.data.Dates[index],
+            Date: this.convertDate(res.data.Dates[index]),
             Value: res.data.AssetsValue[index].toFixed(2),
-            Depreciation: res.data.Depreciation[index].toFixed(2)
+            Depreciation: res.data.Depreciation[index].toFixed(2),
           };
         });
 
@@ -97,10 +102,10 @@ class ExtractDocumented extends Component {
                         id="text-input"
                         name="text-input"
                         placeholder="Name of Document"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            CompanyName: e.target.value
+                            CompanyName: e.target.value,
                           });
                         }}
                       />
@@ -121,10 +126,10 @@ class ExtractDocumented extends Component {
                         id="date-input"
                         name="date-input"
                         placeholder="date"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            SDate: e.target.value
+                            SDate: e.target.value,
                           });
                         }}
                       />
@@ -142,10 +147,10 @@ class ExtractDocumented extends Component {
                         id="date-input"
                         name="date-input"
                         placeholder="date"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
                             ...this.state,
-                            EDate: e.target.value
+                            EDate: e.target.value,
                           });
                         }}
                       />
@@ -161,9 +166,6 @@ class ExtractDocumented extends Component {
                   onClick={this.onClick}
                 >
                   <i className="fa fa-dot-circle-o"></i> Extract
-                </Button>{" "}
-                <Button type="reset" size="xl" color="danger">
-                  <i className="fa fa-ban"></i> Reset
                 </Button>
               </CardFooter>
             </Card>
@@ -179,12 +181,9 @@ class ExtractDocumented extends Component {
               </CardHeader>
               <CardBody>{this.renderData()}</CardBody>
               <CardFooter>
-                <Button type="submit" size="xl" color="primary">
-                  <i className="fa fa-dot-circle-o"></i> Save
-                </Button>{" "}
-                <Button type="submit" size="xl" color="danger">
+                <Button onClick={() => window.print()} size="xl" color="danger">
                   <i className="fa fa-dot-circle-o"></i> Print
-                </Button>{" "}
+                </Button>
               </CardFooter>
             </Card>
           </Col>

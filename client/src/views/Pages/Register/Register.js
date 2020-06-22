@@ -28,6 +28,23 @@ class Register extends Component {
   }
   onSubmit() {
     console.log(this.state);
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (this.state.name == "") {
+      alert("Name field can't be empty.");
+    }
+    if (this.state.email == "") {
+      alert("Email field can't be empty.");
+    } else {
+      if (!re.test(this.state.email)) {
+        alert("Please enter a valid email.");
+      }
+    }
+    if (this.state.designation == "") {
+      alert("Designation field can't be empty.");
+    }
+    if (this.state.password == "") {
+      alert("Password field can't be empty.");
+    }
     axios
       .post("/userreg", {
         Name: this.state.name,

@@ -104,7 +104,7 @@ class DefaultLayout extends Component {
                       />
                     ) : null;
                   })}
-                  <Redirect from="/" to="/dashboard" />
+                  <Redirect from="/" to="/upload" />
                 </Switch>
               </Suspense>
             </Container>
