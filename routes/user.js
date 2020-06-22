@@ -8,7 +8,7 @@ router.post("/userreg", (req, res) => {
   console.log("here");
   User.findOne({ Email: req.body.Email }).then((user) => {
     if (user) {
-      return res.status(400).json("Email already exists");
+      return res.json("Email already exists");
     } else {
       const newUser = new User({
         Email: req.body.Email,
@@ -31,7 +31,7 @@ router.post("/userlogin", (req, res) => {
   const Password = req.body.password;
   User.findOne({ Email: Email, Password: Password }).then((user) => {
     if (!user) {
-      return res.status(404).json("ID not found");
+      return res.json("ID not found");
     }
     res.json({ ID: user._id });
   });
@@ -60,7 +60,7 @@ router.post("/userupdate", (req, res) => {
 router.post("/getuser", (req, res) => {
   User.findOne({ _id: req.body.id }).then((user) => {
     if (!user) {
-      res.status(404).json("Requests not found!");
+      res.json("Requests not found!");
     }
     res.json(user);
   });

@@ -31,34 +31,32 @@ class Register extends Component {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (this.state.name == "") {
       alert("Name field can't be empty.");
-    }
-    if (this.state.email == "") {
+    } else if (this.state.email == "") {
       alert("Email field can't be empty.");
+    } else if (this.state.designation == "") {
+      alert("Designation field can't be empty.");
+    } else if (this.state.password == "") {
+      alert("Password field can't be empty.");
     } else {
       if (!re.test(this.state.email)) {
         alert("Please enter a valid email.");
+      } else {
+        axios
+          .post("/userreg", {
+            Name: this.state.name,
+            Designation: this.state.designation,
+            Email: this.state.email,
+            Password: this.state.password,
+          })
+          .then((res) => {
+            console.log(res.data);
+            this.props.history.push("/login");
+          })
+          .catch((error) => {
+            alert(error);
+          });
       }
     }
-    if (this.state.designation == "") {
-      alert("Designation field can't be empty.");
-    }
-    if (this.state.password == "") {
-      alert("Password field can't be empty.");
-    }
-    axios
-      .post("/userreg", {
-        Name: this.state.name,
-        Designation: this.state.designation,
-        Email: this.state.email,
-        Password: this.state.password,
-      })
-      .then((res) => {
-        console.log(res.data);
-        this.props.history.push("/login");
-      })
-      .catch((error) => {
-        alert(error);
-      });
   }
 
   render() {
