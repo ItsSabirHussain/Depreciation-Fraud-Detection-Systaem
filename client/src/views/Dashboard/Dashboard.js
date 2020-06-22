@@ -153,7 +153,7 @@ class Dashboard extends Component {
                   <Col md="6">
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
-                        <InputGroupText>Passowrd</InputGroupText>
+                        <InputGroupText>Password</InputGroupText>
                       </InputGroupAddon>
                       <Input
                         type="text"
