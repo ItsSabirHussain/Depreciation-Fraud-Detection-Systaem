@@ -48,6 +48,7 @@ class Salvages extends Component {
         CompanyName: this.state.CompanyName,
         SDate: this.state.SDate,
         EDate: this.state.EDate,
+        UserID: localStorage.getItem("userID"),
       })
       .then((res) => {
         let tmpArr = [];
@@ -57,20 +58,24 @@ class Salvages extends Component {
             Date: this.convertDate(res.data.Dates[index]),
             Documented_Value: res.data.Documented_Value[index].toFixed(2),
             Computed_Value: res.data.Computed_Value[index].toFixed(2),
-            Value_Difference:
-              res.data.Documented_Value[index] - res.data.Computed_Value[index],
+            Value_Difference: (
+              res.data.Documented_Value[index] - res.data.Computed_Value[index]
+            ).toFixed(2),
 
-            Documented_Salvage:
+            Documented_Salvage: (
               res.data.Documented_Value[index] -
-              res.data.Documented_Depreciation[index],
-            Computed_Salvage:
+              res.data.Documented_Depreciation[index]
+            ).toFixed(2),
+            Computed_Salvage: (
               res.data.Computed_Value[index] -
-              res.data.Computed_Depreciation[index],
-            Salvage_Difference:
+              res.data.Computed_Depreciation[index]
+            ).toFixed(2),
+            Salvage_Difference: (
               res.data.Documented_Value[index] -
               res.data.Documented_Depreciation[index] -
               (res.data.Computed_Value[index] -
-                res.data.Computed_Depreciation[index]),
+                res.data.Computed_Depreciation[index])
+            ).toFixed(2),
           };
         });
         this.setState({ TableBady: tmpArr });

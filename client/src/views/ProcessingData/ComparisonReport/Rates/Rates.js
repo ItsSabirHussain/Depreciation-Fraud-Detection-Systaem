@@ -58,9 +58,9 @@ class Rates extends Component {
             Date: this.convertDate(res.data.Dates[index]),
             Documented_Value: res.data.Documented_Value[index].toFixed(2),
             Computed_Value: res.data.Computed_Value[index].toFixed(2),
-            Value_Difference:
-              res.data.Documented_Value[index] -
-              res.data.Computed_Value[index].toFixed(2),
+            Value_Difference: (
+              res.data.Documented_Value[index] - res.data.Computed_Value[index]
+            ).toFixed(2),
 
             Documented_Rate: (
               (res.data.Documented_Depreciation[index] * 100) /

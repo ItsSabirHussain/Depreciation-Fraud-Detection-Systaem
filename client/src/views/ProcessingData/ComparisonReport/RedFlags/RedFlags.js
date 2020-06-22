@@ -69,18 +69,20 @@ class RedFlags extends Component {
               Date: this.convertDate(res.data.Dates[index]),
               Documented_Value: res.data.Documented_Value[index].toFixed(2),
               Computed_Value: res.data.Computed_Value[index].toFixed(2),
-              Value_Difference:
+              Value_Difference: (
                 res.data.Documented_Value[index] -
-                res.data.Computed_Value[index],
+                res.data.Computed_Value[index]
+              ).toFixed(2),
               Documented_Depreciation: res.data.Documented_Depreciation[
                 index
               ].toFixed(2),
               Computed_Depreciation: res.data.Computed_Depreciation[
                 index
               ].toFixed(2),
-              Depreciation_Difference:
+              Depreciation_Difference: (
                 res.data.Documented_Depreciation[index] -
-                res.data.Computed_Depreciation[index],
+                res.data.Computed_Depreciation[index]
+              ).toFixed(2),
 
               Documented_Rate: (
                 (res.data.Documented_Depreciation[index] * 100) /
@@ -212,9 +214,6 @@ class RedFlags extends Component {
                 >
                   <i className="fa fa-dot-circle-o"></i> Extract
                 </Button>{" "}
-                <Button type="reset" size="xl" color="danger">
-                  <i className="fa fa-ban"></i> Reset
-                </Button>
               </CardFooter>
             </Card>
           </Col>

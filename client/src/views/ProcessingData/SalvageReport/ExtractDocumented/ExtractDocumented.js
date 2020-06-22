@@ -51,11 +51,17 @@ class ExtractDocumented extends Component {
       .then((res) => {
         let tmpArr = [];
         res.data.AssetsName.map((data, index) => {
+          var sV = null;
+          if (res.data.Salvage[index]) {
+            sV = res.data.Salvage[index].toFixed(2);
+          } else {
+            sV = res.data.Salvage[index];
+          }
           tmpArr[index] = {
             AssetName: data,
             Date: this.convertDate(res.data.Dates[index]),
             Value: res.data.AssetsValue[index].toFixed(2),
-            Salvage_Value: res.data.Salvage[index].toFixed(2),
+            Salvage_Value: sV,
           };
         });
 

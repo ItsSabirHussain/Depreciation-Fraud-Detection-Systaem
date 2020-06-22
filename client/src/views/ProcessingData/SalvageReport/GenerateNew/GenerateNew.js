@@ -41,7 +41,7 @@ class GenerateNew extends Component {
     console.log(this.state.SDate);
     console.log(this.state.EDate);
 
-    const url = "/ ";
+    const url = "/extnewsal ";
     axios
       .post(url, {
         CompanyName: this.state.CompanyName,
@@ -52,11 +52,17 @@ class GenerateNew extends Component {
       .then((res) => {
         let tmpArr = [];
         res.data.AssetsName.map((data, index) => {
+          var sV = null;
+          if (res.data.Salvage[index]) {
+            sV = res.data.Salvage[index].toFixed(2);
+          } else {
+            sV = res.data.Salvage[index];
+          }
           tmpArr[index] = {
             AssetName: data,
             Date: this.convertDate(res.data.Dates[index]),
             Value: res.data.AssetsValue[index].toFixed(2),
-            Salvage_Value: res.data.Salvage[index].toFixed(2),
+            Salvage_Value: sV,
           };
         });
 
@@ -170,9 +176,6 @@ class GenerateNew extends Component {
                 >
                   <i className="fa fa-dot-circle-o"></i> Extract
                 </Button>{" "}
-                <Button type="reset" size="xl" color="danger">
-                  <i className="fa fa-ban"></i> Reset
-                </Button>
               </CardFooter>
             </Card>
           </Col>
