@@ -1,0 +1,6 @@
+{
+  "name": "Salvages",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Salvages.js"
+}
