@@ -155,7 +155,7 @@ class Upload extends Component {
                         type="text"
                         id="text-input"
                         name="text-input"
-                        placeholder="Companny Name"
+                        placeholder="Company's Name"
                         onChange={(e) => {
                           this.setState({
                             ...this.state,

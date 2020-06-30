@@ -122,7 +122,7 @@ class Rates extends Component {
                         type="text"
                         id="text-input"
                         name="text-input"
-                        placeholder="Name of Document"
+                        placeholder="Company's Name"
                         onChange={(e) => {
                           this.setState({
                             ...this.state,

@@ -80,7 +80,7 @@ class GenerateNew extends Component {
           <Col xs="12" md="12">
             <Card>
               <CardHeader>
-                <strong>Generate Report of New Depreciations Values : </strong>{" "}
+                <strong>Generate Report of New Rates Values : </strong>{" "}
                 (according to extracted or provided rates)
               </CardHeader>
               <CardBody>
@@ -99,7 +99,7 @@ class GenerateNew extends Component {
                         type="text"
                         id="text-input"
                         name="text-input"
-                        placeholder="Name of Document"
+                        placeholder="Company's Name"
                         onChange={(e) => {
                           this.setState({
                             ...this.state,
