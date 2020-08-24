@@ -50,9 +50,9 @@ class ViewSpecific extends Component {
           if (!data == "") {
             tmpArr[index] = {
               AssetName: data,
-              Value: res.data.Value[index],
-              Depreciation: res.data.Depreciation[index],
-              NetValue: res.data.NetValue[index],
+              Value: res.data.Value[index].toFixed(2),
+              Depreciation: res.data.Depreciation[index].toFixed(2),
+              NetValue: res.data.NetValue[index].toFixed(2),
             };
           }
         });
