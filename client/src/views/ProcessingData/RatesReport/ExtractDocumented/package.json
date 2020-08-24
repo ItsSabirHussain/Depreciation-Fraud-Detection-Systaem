@@ -1,0 +1,6 @@
+{
+  "name": "ExtractDocumented",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ExtractDocumented.js"
+}
